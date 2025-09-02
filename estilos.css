@@ -76,24 +76,85 @@ body {
 /* -------------------------------
    Tarjetas de beneficios
 -------------------------------- */
-.card {
+.benefit-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  background-color: #f9fafb; /* gray-50 */
-  text-align: center;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
 }
-.card h3 {
-  font-size: 1.125rem;
-  font-weight: bold;
+
+.benefit-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, #10b981, #059669);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.benefit-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.benefit-card:hover::before {
+  opacity: 1;
+}
+
+.benefit-icon {
+  width: 64px;
+  height: 64px;
+  background-color: #ecfdf5;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.benefit-card:hover .benefit-icon {
+  background-color: #d1fae5;
+  transform: scale(1.05);
+}
+
+.benefit-icon span {
+  font-size: 2rem;
+  color: #059669;
+  transition: all 0.3s ease;
+}
+
+.benefit-card:hover .benefit-icon span {
+  color: #047857;
+}
+
+.benefit-title {
+  font-size: 1.25rem;
+  font-weight: 600;
   color: #111827;
+  margin-bottom: 0.75rem;
+  transition: color 0.3s ease;
 }
-.card p {
-  font-size: 0.875rem;
-  color: #4b5563;
+
+.benefit-card:hover .benefit-title {
+  color: #059669;
+}
+
+.benefit-text {
+  font-size: 1rem;
+  color: #6b7280;
+  text-align: center;
+  line-height: 1.5;
 }
 
 /* ================================

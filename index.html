@@ -14,6 +14,139 @@
 
   <!-- Tu CSS personalizado -->
   <link rel="stylesheet" href="styles.css">
+  <style>
+    @keyframes slideFromLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideFromRight {
+      from {
+        opacity: 0;
+        transform: translateX(100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .slide-from-left {
+      animation: slideFromLeft 1s ease-out forwards;
+    }
+
+    .slide-from-right {
+      animation: slideFromRight 1s ease-out forwards;
+    }
+
+    .hover-scale {
+      transition: transform 0.5s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    }
+
+    @keyframes spin-slow {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .animate-spin-slow {
+      animation: spin-slow 20s linear infinite;
+    }
+
+    /* Mobile menu animation */
+    #mobile-menu {
+      transition: all 0.3s ease-in-out;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #mobile-menu.hidden {
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+    }
+
+    .hover-scale:hover {
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes fadeInRight {
+      from {
+        opacity: 0;
+        transform: translateX(100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes growDown {
+      from {
+        transform: scaleY(0);
+      }
+      to {
+        transform: scaleY(1);
+      }
+    }
+
+    .animate-fadeIn {
+      animation: fadeIn 1s ease-out forwards;
+    }
+
+    .animate-fadeInLeft {
+      animation: fadeInLeft 1s ease-out forwards;
+    }
+
+    .animate-fadeInRight {
+      animation: fadeInRight 1s ease-out forwards;
+    }
+
+    .animate-growDown {
+      animation: growDown 1.5s ease-out forwards;
+    }
+
+    .timeline-step {
+      opacity: 0;
+    }
+
+    .timeline-step.animate {
+      animation: fadeInLeft 1s ease-out forwards;
+    }
+
+    .timeline-step:nth-child(even).animate {
+      animation: fadeInRight 1s ease-out forwards;
+    }
+  </style>
 </head>
 <body style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
 
@@ -21,20 +154,51 @@
     <div class="layout-container flex h-full grow flex-col">
       
       <!-- HEADER -->
-      <header class="flex items-center justify-between border-b border-gray-200 px-10 py-3">
-        <div class="flex items-center gap-3 text-green-800">
-          <svg class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-            <path d="M42.1739 20.1739L27.8261 5.82609C29.1366 7.13663 28.3989 10.1876 26.2002 13.7654C24.8538 15.9564 22.9595 18.3449 20.6522 20.6522C18.3449 22.9595 15.9564 24.8538 13.7654 26.2002C10.1876 28.3989 7.13663 29.1366 5.82609 27.8261L20.1739 42.1739C21.4845 43.4845 24.5355 42.7467 28.1133 40.548C30.3042 39.2016 32.6927 37.3073 35 35C37.3073 32.6927 39.2016 30.3042 40.548 28.1133C42.7467 24.5355 43.4845 21.4845 42.1739 20.1739Z" fill="currentColor"></path>
-          </svg>
-          <h2 class="text-xl font-bold text-gray-800">EcoCanje SV</h2>
-        </div>
-        <div class="flex flex-1 justify-end gap-8">
-          <nav class="flex items-center gap-8">
-            <a class="nav-link" href="#">Inicio</a>
-            <a class="nav-link" href="#">Servicios</a>
-            <a class="nav-link active" href="#">Beneficios</a>
-            <a class="nav-link" href="#contacto">Contacto</a>
-          </nav>
+      <header class="bg-white shadow-lg fixed w-full z-50">
+        <div class="container mx-auto px-6 py-4">
+          <div class="flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center transform hover:scale-105 transition-transform">
+              <svg class="h-8 w-8 text-green-600 animate-spin-slow" fill="none" viewBox="0 0 24 24">
+                <path d="M12 4L8 8H4V12L0 16L4 20V24H8L12 28L16 24H20V20L24 16L20 12V8H16L12 4Z" fill="currentColor"/>
+              </svg>
+              <h2 class="text-xl font-bold text-gray-900 ml-3">EcoCanje SV</h2>
+            </div>
+
+            <!-- Mobile menu button -->
+            <div class="md:hidden">
+              <button id="mobile-menu-button" class="text-gray-700 hover:text-green-600 focus:outline-none" 
+                      onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                <span class="material-symbols-outlined text-3xl">menu</span>
+              </button>
+            </div>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8">
+              <nav class="flex items-center gap-8">
+                <a class="text-gray-800 hover:text-green-600 transition-all hover:scale-110" href="#">Inicio</a>
+                <a class="text-gray-800 hover:text-green-600 transition-all hover:scale-110" href="#">Servicios</a>
+                <a class="text-gray-800 hover:text-green-600 transition-all hover:scale-110" href="#">Beneficios</a>
+                <a class="text-gray-800 hover:text-green-600 transition-all hover:scale-110" href="#contacto">Contacto</a>
+              </nav>
+              <a href="#login" class="bg-green-600 text-white rounded-lg px-6 py-2 hover:bg-green-700 transition-all hover:scale-105 hover:shadow-lg">
+                Iniciar sesión
+              </a>
+            </div>
+          </div>
+
+          <!-- Mobile Menu (hidden by default) -->
+          <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
+            <nav class="flex flex-col space-y-4">
+              <a href="#" class="text-gray-800 hover:text-green-600 transition-colors px-4 py-2 hover:bg-gray-100 rounded">Inicio</a>
+              <a href="#" class="text-gray-800 hover:text-green-600 transition-colors px-4 py-2 hover:bg-gray-100 rounded">Servicios</a>
+              <a href="#" class="text-gray-800 hover:text-green-600 transition-colors px-4 py-2 hover:bg-gray-100 rounded">Beneficios</a>
+              <a href="#contacto" class="text-gray-800 hover:text-green-600 transition-colors px-4 py-2 hover:bg-gray-100 rounded">Contacto</a>
+              <a href="#login" class="bg-green-600 text-white rounded-lg px-4 py-2 hover:bg-green-700 transition-colors text-center mx-4">
+                Iniciar sesión
+              </a>
+            </nav>
+          </div>
         </div>
       </header>
 
@@ -42,111 +206,554 @@
       <main class="flex-1">
 
         <!-- HERO -->
-        <section class="relative flex min-h-[480px] items-center justify-center bg-cover bg-center py-20 px-10 text-white" style='background-image: linear-gradient(rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuAb2EfLbjo_c5owRTQnIY_TT0NXSV2R__hPOu2n-r5hrBtqHE0Rhm_vckNUswe-CgBGoXoqyH9XoqsaJxpDJF-zOkdGJZQR3d1ZaSOAqyXUIPiXdlvT73YmlGze9Yxn8ZeblZMGKZkoT1aujmdvJZYUb82hHhV5ALTLVdPWJ2U6KlTWG8q8EZY0u_DpNgLP5visV1s6GrL17jv5rCg0sMsILKY8CwafLI4c3z7hFf6OFBKeA5jr4D1xnqKDrlmqmVijQKv13xCdpmjy");'>
-          <div class="flex max-w-4xl flex-col items-center gap-6 text-center">
-            <h1 class="text-5xl font-black leading-tight tracking-tighter">Beneficios de EcoCanje SV</h1>
-            <p class="text-lg text-gray-200">
-              Descubre cómo EcoCanje SV transforma el reciclaje en una oportunidad para ciudadanos, empresas y municipios en El Salvador.
-            </p>
-            <button class="btn-primary h-12 px-6 text-base">Explorar Servicios</button>
+        <section class="relative flex min-h-[450px] bg-white">
+          <div class="container mx-auto px-6 pt-2 pb-12 flex flex-col lg:flex-row items-center justify-between">
+            <div class="max-w-xl lg:w-1/2">
+              <h1 class="text-6xl font-bold text-gray-900 mb-4">Más que reciclaje</h1>
+              <p class="text-xl text-gray-600 mb-6">
+                EcoCanje SV fue desarrollado para hacer más fácil el reciclaje en toda la comunidad. Al facilitar el proceso y recompensar la participación, creamos un impacto positivo en el medio ambiente y en nuestra sociedad.
+              </p>
+              <div class="flex gap-4">
+                <button class="bg-green-600 text-white rounded-lg h-12 px-8 text-base hover:bg-green-700 transition-colors">
+                  Obtener cotización
+                </button>
+                <button class="text-gray-700 bg-white border border-gray-300 rounded-lg h-12 px-8 text-base hover:bg-gray-50 transition-colors">
+                  Cómo funciona
+                </button>
+              </div>
+            </div>
+            <div class="lg:w-1/2 mt-12 lg:mt-0">
+              <img src="img/Adobe Express - file (3).png" 
+                   alt="Ilustración de reciclaje" 
+                   class="w-full h-auto">
+            </div>
           </div>
         </section>
 
         <!-- ¿QUÉ ES? -->
-        <section class="py-20 sm:py-24" id="what-is">
+        <section class="py-20 sm:py-24 bg-white overflow-hidden" id="what-is">
           <div class="container mx-auto px-6">
-            <div class="mx-auto max-w-4xl text-center">
-              <h2 class="text-3xl font-bold sm:text-4xl">¿Qué es EcoCanje SV?</h2>
-              <p class="mt-6 text-lg text-gray-600">
-                EcoCanje SV es una plataforma web innovadora que te conecta con tu comunidad para fomentar el reciclaje y la economía circular en El Salvador. Intercambia materiales reciclables por puntos y recompensas, contribuyendo activamente a un futuro más sostenible y próspero para todos. Somos más que una app, somos un movimiento.
-              </p>
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+              <div class="lg:w-1/2 slide-from-left">
+                <h2 class="text-4xl font-bold mb-8">¿Qué es EcoCanje SV?</h2>
+                <p class="text-xl leading-relaxed text-gray-600">
+                  EcoCanje SV es una plataforma web innovadora que te conecta con tu comunidad para fomentar el reciclaje y la economía circular en El Salvador. Intercambia materiales reciclables por puntos y recompensas, contribuyendo activamente a un futuro más sostenible y próspero para todos.
+                </p>
+                <p class="text-xl leading-relaxed text-gray-600 mt-4">
+                  Somos más que una app, somos un movimiento que impulsa el cambio ambiental a través de la colaboración comunitaria y la tecnología.
+                </p>
+              </div>
+              <div class="lg:w-1/2 slide-from-right">
+                <div class="relative">
+                  <div class="absolute inset-0 bg-green-200 rounded-3xl rotate-3"></div>
+                  <img src="img/Adobe Express - file (7).png"EcoCanje SV Concepto" 
+                       class="relative rounded-3xl shadow-xl hover-scale w-full h-auto z-10">
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
         <!-- ¿CÓMO FUNCIONA? -->
-        <section class="bg-gray-50 px-10 py-20" id="how-it-works">
+        <section class="py-20 bg-green-50" id="how-it-works">
           <div class="container mx-auto px-6">
-            <div class="mx-auto max-w-4xl text-center">
-              <h2 class="text-3xl font-bold sm:text-4xl">¿Cómo funciona?</h2>
-              <p class="mt-6 text-lg text-gray-600">Es fácil, rápido y gratificante. Sigue estos 3 sencillos pasos para empezar a transformar tu comunidad.</p>
+            <!-- Header -->
+            <div class="max-w-3xl mx-auto text-center mb-16 opacity-0 animate-fadeIn">
+              <span class="text-sm font-semibold text-green-600 tracking-wide uppercase mb-2 block">Proceso simple</span>
+              <h2 class="text-5xl font-black text-gray-900 mb-6">¿Cómo funciona?</h2>
+              <div class="w-24 h-1 bg-green-600 mx-auto mb-8"></div>
+              <p class="text-xl text-gray-600">
+                Es fácil, rápido y gratificante. Sigue estos pasos para empezar a transformar tu comunidad.
+              </p>
             </div>
-            <div class="mt-16 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
-              <div class="text-center">
-                <div class="step-icon"><span class="material-symbols-outlined text-3xl">recycling</span></div>
-                <h3 class="step-title">1. Separa y Recicla</h3>
-                <p class="step-text">Clasifica tus materiales reciclables (plástico, vidrio, papel, etc.).</p>
+
+            <!-- Timeline Steps -->
+            <div class="max-w-4xl mx-auto relative">
+              <!-- Timeline Line -->
+              <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-green-200 origin-top animate-growDown"></div>
+
+              <!-- Step 1 -->
+              <div class="relative mb-16 timeline-step">
+                <div class="flex items-center group">
+                  <div class="w-1/2 pr-12 text-right transform transition-all duration-500 group-hover:-translate-x-2">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">1. Separa y Recicla</h3>
+                    <p class="text-lg text-gray-600">Clasifica tus materiales reciclables en categorías: plástico, vidrio, papel, etc.</p>
+                  </div>
+                  <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <div class="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg">
+                      <span class="material-symbols-outlined text-2xl text-white">recycling</span>
+                    </div>
+                  </div>
+                  <div class="w-1/2 pl-12 transform transition-all duration-500 group-hover:translate-x-2">
+                    <img src="img/Separa y recicla.png" alt="Separación de residuos" class="rounded-lg shadow-lg transition-all duration-500 group-hover:shadow-xl group-hover:scale-105">
+                  </div>
+                </div>
               </div>
-              <div class="text-center">
-                <div class="step-icon"><span class="material-symbols-outlined text-3xl">pin_drop</span></div>
-                <h3 class="step-title">2. Encuentra un Punto</h3>
-                <p class="step-text">Usa nuestro mapa para localizar el centro de acopio más cercano.</p>
+
+              <!-- Step 2 -->
+              <div class="relative mb-16 timeline-step">
+                <div class="flex items-center group">
+                  <div class="w-1/2 pr-12 transform transition-all duration-500 group-hover:-translate-x-2">
+                    <img src="img/Directions-bro.png" alt="Puntos de recolección" class="rounded-lg shadow-lg transition-all duration-500 group-hover:shadow-xl group-hover:scale-105">
+                  </div>
+                  <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <div class="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg">
+                      <span class="material-symbols-outlined text-2xl text-white">location_on</span>
+                    </div>
+                  </div>
+                  <div class="w-1/2 pl-12 transform transition-all duration-500 group-hover:translate-x-2">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">2. Encuentra un Punto</h3>
+                    <p class="text-lg text-gray-600">Localiza el centro de acopio más cercano usando nuestro mapa interactivo.</p>
+                  </div>
+                </div>
               </div>
-              <div class="text-center">
-                <div class="step-icon"><span class="material-symbols-outlined text-3xl">redeem</span></div>
-                <h3 class="step-title">3. Gana Recompensas</h3>
-                <p class="step-text">Acumula EcoPuntos y canjéalos por increíbles beneficios.</p>
+
+              <!-- Step 3 -->
+              <div class="relative timeline-step">
+                <div class="flex items-center group">
+                  <div class="w-1/2 pr-12 text-right transform transition-all duration-500 group-hover:-translate-x-2">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">3. Gana Recompensas</h3>
+                    <p class="text-lg text-gray-600">Acumula EcoPuntos por tus aportes y canjéalos por increíbles beneficios.</p>
+                  </div>
+                  <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <div class="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg">
+                      <span class="material-symbols-outlined text-2xl text-white group-hover:animate-bounce">redeem</span>
+                    </div>
+                  </div>
+                  <div class="w-1/2 pl-12 transform transition-all duration-500 group-hover:translate-x-2">
+                    <img src="img/Piggy bank-pana (1).png" alt="Sistema de recompensas" 
+                         class="rounded-lg shadow-lg transition-all duration-500 group-hover:shadow-xl group-hover:scale-105">
+                    <div class="absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div class="bg-green-600 text-white rounded-full px-4 py-2 shadow-lg">
+                        <span class="text-sm font-semibold whitespace-nowrap">¡Gana EcoPuntos!</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mobile Steps -->
+            <div class="md:hidden space-y-8 mt-12">
+              <!-- Mobile Step 1 -->
+              <div class="bg-white rounded-xl shadow-lg p-6">
+                <div class="flex items-center gap-4 mb-4">
+                  <div class="bg-green-100 rounded-full p-3">
+                    <span class="material-symbols-outlined text-2xl text-green-600">recycling</span>
+                  </div>
+                  <h3 class="text-xl font-bold">1. Separa y Recicla</h3>
+                </div>
+                <p class="text-gray-600">Clasifica tus materiales reciclables en categorías específicas.</p>
+              </div>
+
+              <!-- Mobile Step 2 -->
+              <div class="bg-white rounded-xl shadow-lg p-6">
+                <div class="flex items-center gap-4 mb-4">
+                  <div class="bg-green-100 rounded-full p-3">
+                    <span class="material-symbols-outlined text-2xl text-green-600">location_on</span>
+                  </div>
+                  <h3 class="text-xl font-bold">2. Encuentra un Punto</h3>
+                </div>
+                <p class="text-gray-600">Localiza el centro de acopio más cercano a ti.</p>
+              </div>
+
+              <!-- Mobile Step 3 -->
+              <div class="bg-white rounded-xl shadow-lg p-6">
+                <div class="flex items-center gap-4 mb-4">
+                  <div class="bg-green-100 rounded-full p-3">
+                    <span class="material-symbols-outlined text-2xl text-green-600">redeem</span>
+                  </div>
+                  <h3 class="text-xl font-bold">3. Gana Recompensas</h3>
+                </div>
+                <p class="text-gray-600">Acumula y canjea tus EcoPuntos por beneficios.</p>
+              </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="text-center mt-16">
+              <a href="#comenzar" class="inline-flex items-center gap-2 bg-green-600 text-white px-8 py-4 rounded-full hover:bg-green-700 transition-colors">
+                Comenzar ahora
+                <span class="material-symbols-outlined">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        
+
+        <!-- MODELO DE NEGOCIO -->
+        <section class="py-16 bg-gradient-to-b from-white to-green-50" id="business-model">
+          <div class="container mx-auto px-6">
+            <div class="mx-auto max-w-4xl text-center mb-16">
+              <span class="text-sm font-semibold text-green-600 tracking-wide uppercase mb-2 block">Economía circular</span>
+              <h2 class="text-5xl font-black text-gray-900 mb-6">Modelo de Negocio Sostenible</h2>
+              <div class="w-24 h-1 bg-green-600 mx-auto mb-8"></div>
+              <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                EcoCanje SV opera bajo un modelo de economía circular, fomentando el reciclaje comunitario y la sostenibilidad.
+              </p>
+            </div>
+
+            <div class="relative">
+              <!-- Círculo central -->
+              <div class="hidden lg:block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-green-600 rounded-full">
+                <div class="absolute inset-0 flex items-center justify-center text-white text-center p-4">
+                  <div>
+                    <span class="material-symbols-outlined text-4xl mb-2">sync</span>
+                    <p class="text-sm font-semibold">Economía Circular</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Patrocinios Empresariales -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-1 transition-all duration-300">
+                  <div class="bg-green-600 px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <span class="material-symbols-outlined text-2xl text-white">business</span>
+                      <h3 class="text-xl font-bold text-white">Patrocinios Empresariales</h3>
+                    </div>
+                  </div>
+                  <div class="p-6">
+                    <p class="text-gray-600 mb-6">Las empresas socialmente responsables nos brindan apoyo financiero y recursos.</p>
+                    <ul class="space-y-3">
+                      <li class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-green-600">check_circle</span>
+                        <span class="text-gray-700">Apoyo financiero</span>
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-green-600">check_circle</span>
+                        <span class="text-gray-700">Recursos operativos</span>
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-green-600">check_circle</span>
+                        <span class="text-gray-700">Alcance nacional</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Recompensas Municipales -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-1 transition-all duration-300">
+                  <div class="bg-green-600 px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <span class="material-symbols-outlined text-2xl text-white">location_city</span>
+                      <h3 class="text-xl font-bold text-white">Recompensas Municipales</h3>
+                    </div>
+                  </div>
+                  <div class="p-6">
+                    <p class="text-gray-600 mb-6">Los municipios gestionan y distribuyen incentivos a las comunidades participantes.</p>
+                    <ul class="space-y-3">
+                      <li class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-green-600">check_circle</span>
+                        <span class="text-gray-700">Gestión local</span>
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-green-600">check_circle</span>
+                        <span class="text-gray-700">Incentivos comunitarios</span>
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-green-600">check_circle</span>
+                        <span class="text-gray-700">Participación ciudadana</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Alianzas con Comercios -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-1 transition-all duration-300">
+                  <div class="bg-green-600 px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <span class="material-symbols-outlined text-2xl text-white">storefront</span>
+                      <h3 class="text-xl font-bold text-white">Alianzas Comerciales</h3>
+                    </div>
+                  </div>
+                  <div class="p-6">
+                    <p class="text-gray-600 mb-6">Comercios locales ofrecen beneficios exclusivos creando un ecosistema sostenible.</p>
+                    <ul class="space-y-3">
+                      <li class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-green-600">check_circle</span>
+                        <span class="text-gray-700">Descuentos exclusivos</span>
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-green-600">check_circle</span>
+                        <span class="text-gray-700">Promociones especiales</span>
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-green-600">check_circle</span>
+                        <span class="text-gray-700">Beneficio mutuo</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Métricas de Impacto -->
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div class="bg-white rounded-xl p-6 text-center">
+                <span class="material-symbols-outlined text-4xl text-green-600 mb-2">business</span>
+                <h4 class="text-2xl font-bold text-gray-900">50+</h4>
+                <p class="text-gray-600">Empresas Aliadas</p>
+              </div>
+              <div class="bg-white rounded-xl p-6 text-center">
+                <span class="material-symbols-outlined text-4xl text-green-600 mb-2">location_city</span>
+                <h4 class="text-2xl font-bold text-gray-900">15</h4>
+                <p class="text-gray-600">Municipios Activos</p>
+              </div>
+              <div class="bg-white rounded-xl p-6 text-center">
+                <span class="material-symbols-outlined text-4xl text-green-600 mb-2">storefront</span>
+                <h4 class="text-2xl font-bold text-gray-900">200+</h4>
+                <p class="text-gray-600">Comercios Asociados</p>
+              </div>
+              <div class="bg-white rounded-xl p-6 text-center">
+                <span class="material-symbols-outlined text-4xl text-green-600 mb-2">group</span>
+                <h4 class="text-2xl font-bold text-gray-900">10k+</h4>
+                <p class="text-gray-600">Usuarios Beneficiados</p>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- SECCIÓN PARA CIUDADANOS -->
-        <section class="px-10 py-20">
-          <div class="mx-auto max-w-6xl">
-            <div class="flex flex-col gap-16">
-              <div class="text-center">
-                <h2 class="text-4xl font-black text-gray-900">Para Ciudadanos</h2>
-                <p class="mx-auto max-w-3xl text-lg text-gray-600">EcoCanje SV ofrece a los ciudadanos la oportunidad de contribuir activamente al reciclaje, obteniendo beneficios tangibles y promoviendo un estilo de vida sostenible.</p>
+        <!-- BENEFICIOS -->
+        <section class="py-20 bg-white" id="benefits">
+          <div class="container mx-auto px-6">
+            <div class="mx-auto max-w-4xl text-center mb-16">
+              <h2 class="text-6xl font-black text-gray-900 mb-6">Beneficios para Ti</h2>
+              <p class="text-xl text-gray-600">
+                Descubre todas las ventajas que EcoCanje SV tiene para ofrecer y cómo puedes ser parte del cambio
+              </p>
+            </div>
+
+            <div class="max-w-6xl mx-auto">
+              <!-- Beneficios Principales -->
+              <div class="bg-green-600 rounded-t-3xl p-6">
+                <h3 class="text-2xl font-bold text-white">Beneficios Principales</h3>
               </div>
-              <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-                <div class="card"><span class="material-symbols-outlined text-4xl text-green-600">savings</span><h3>Ahorro Económico</h3><p>Obtén descuentos y recompensas por cada material reciclado.</p></div>
-                <div class="card"><span class="material-symbols-outlined text-4xl text-green-600">eco</span><h3>Conciencia Ambiental</h3><p>Participa en iniciativas que fomentan sostenibilidad.</p></div>
-                <div class="card"><span class="material-symbols-outlined text-4xl text-green-600">monitoring</span><h3>Datos y Estadísticas</h3><p>Accede a información sobre tu impacto ambiental.</p></div>
-                <div class="card"><span class="material-symbols-outlined text-4xl text-green-600">military_tech</span><h3>Recompensas</h3><p>Canjea puntos por productos, servicios o donaciones.</p></div>
+
+              <!-- Lista de Beneficios -->
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+                <!-- Ahorro Económico -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                  <div class="flex items-start gap-4">
+                    <div class="bg-green-100 rounded-full p-4">
+                      <span class="material-symbols-outlined text-3xl text-green-600">savings</span>
+                    </div>
+                    <div>
+                      <h4 class="text-xl font-bold text-gray-900 mb-2">Ahorro Económico</h4>
+                      <p class="text-gray-600">Obtén descuentos y recompensas por cada material reciclado</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Conciencia Ambiental -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                  <div class="flex items-start gap-4">
+                    <div class="bg-green-100 rounded-full p-4">
+                      <span class="material-symbols-outlined text-3xl text-green-600">eco</span>
+                    </div>
+                    <div>
+                      <h4 class="text-xl font-bold text-gray-900 mb-2">Conciencia Ambiental</h4>
+                      <p class="text-gray-600">Participa en iniciativas que fomentan sostenibilidad</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Datos y Estadísticas -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                  <div class="flex items-start gap-4">
+                    <div class="bg-green-100 rounded-full p-4">
+                      <span class="material-symbols-outlined text-3xl text-green-600">monitoring</span>
+                    </div>
+                    <div>
+                      <h4 class="text-xl font-bold text-gray-900 mb-2">Datos y Estadísticas</h4>
+                      <p class="text-gray-600">Accede a información sobre tu impacto ambiental</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Estadísticas de Impacto -->
+              <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Usuarios Activos -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                  <div class="flex flex-col items-center text-center">
+                    <div class="bg-green-100 rounded-full p-4 mb-4">
+                      <span class="material-symbols-outlined text-4xl text-green-600">group</span>
+                    </div>
+                    <h4 class="text-4xl font-bold text-gray-900 mb-2">2,500+</h4>
+                    <p class="text-gray-600">Usuarios Activos</p>
+                  </div>
+                </div>
+
+                <!-- Toneladas Recicladas -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                  <div class="flex flex-col items-center text-center">
+                    <div class="bg-green-100 rounded-full p-4 mb-4">
+                      <span class="material-symbols-outlined text-4xl text-green-600">recycling</span>
+                    </div>
+                    <h4 class="text-4xl font-bold text-gray-900 mb-2">15 Ton</h4>
+                    <p class="text-gray-600">Recicladas este mes</p>
+                  </div>
+                </div>
+
+                <!-- Recompensas Entregadas -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                  <div class="flex flex-col items-center text-center">
+                    <div class="bg-green-100 rounded-full p-4 mb-4">
+                      <span class="material-symbols-outlined text-4xl text-green-600">redeem</span>
+                    </div>
+                    <h4 class="text-4xl font-bold text-gray-900 mb-2">$50,000+</h4>
+                    <p class="text-gray-600">En recompensas entregadas</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CTA -->
+              <div class="text-center mt-12">
+                <a href="#explorar-beneficios" 
+                   class="inline-flex items-center gap-2 bg-green-600 text-white px-8 py-4 rounded-full hover:bg-green-700 transition-colors text-lg font-semibold">
+                  Explorar más beneficios
+                  <span class="material-symbols-outlined">arrow_forward</span>
+                </a>
               </div>
             </div>
           </div>
         </section>
 
         <!-- SECCIÓN PARA EMPRESAS -->
-        <section class="bg-gray-50 px-10 py-20">
-          <div class="mx-auto max-w-6xl">
-            <div class="flex flex-col gap-16">
-              <div class="text-center">
-                <h2 class="text-4xl font-black text-gray-900">Para Empresas</h2>
-                <p class="mx-auto max-w-3xl text-lg text-gray-600">EcoCanje SV ayuda a las empresas a integrar prácticas de reciclaje en sus operaciones, mejorando su imagen y contribuyendo a la sostenibilidad.</p>
+        <section class="py-16 bg-white" id="business-benefits">
+          <div class="container mx-auto px-6">
+            <div class="mx-auto max-w-4xl text-center mb-16">
+              <h2 class="text-4xl font-bold text-gray-900 mb-4">Para Empresas</h2>
+              <p class="text-lg text-green-600">
+                EcoCanje SV ayuda a las empresas a integrar prácticas de reciclaje en sus operaciones, mejorando su imagen y contribuyendo a la sostenibilidad.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <!-- Reputación Sostenible -->
+              <div class="bg-white p-12 rounded-xl shadow-lg hover:shadow-xl transition-shadow transform hover:scale-105 duration-300">
+                <div class="flex flex-col items-center text-center">
+                  <div class="bg-green-100 rounded-full p-6 mb-8">
+                    <span class="material-symbols-outlined text-6xl text-green-600">verified</span>
+                  </div>
+                  <h3 class="text-2xl font-semibold text-gray-900 mb-4">Reputación Sostenible</h3>
+                  <p class="text-lg text-gray-600">
+                    Mejora tu marca demostrando compromiso
+                  </p>
+                </div>
               </div>
-              <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-                <div class="card"><span class="material-symbols-outlined text-4xl text-green-600">apartment</span><h3>Reputación Sostenible</h3><p>Mejora tu marca demostrando compromiso.</p></div>
-                <div class="card"><span class="material-symbols-outlined text-4xl text-green-600">task_alt</span><h3>Gestión Eficiente</h3><p>Optimiza la gestión de residuos.</p></div>
-                <div class="card"><span class="material-symbols-outlined text-4xl text-green-600">trending_down</span><h3>Reducción de Costos</h3><p>Aprovecha beneficios y reduce gastos.</p></div>
-                <div class="card"><span class="material-symbols-outlined text-4xl text-green-600">groups</span><h3>Responsabilidad Social</h3><p>Cumple objetivos de RSE.</p></div>
+
+              <!-- Gestión Eficiente -->
+              <div class="bg-white p-12 rounded-xl shadow-lg hover:shadow-xl transition-shadow transform hover:scale-105 duration-300">
+                <div class="flex flex-col items-center text-center">
+                  <div class="bg-green-100 rounded-full p-6 mb-8">
+                    <span class="material-symbols-outlined text-6xl text-green-600">trending_up</span>
+                  </div>
+                  <h3 class="text-2xl font-semibold text-gray-900 mb-4">Gestión Eficiente</h3>
+                  <p class="text-lg text-gray-600">
+                    Optimiza la gestión de residuos
+                  </p>
+                </div>
+              </div>
+
+              <!-- Reducción de Costos -->
+              <div class="bg-white p-12 rounded-xl shadow-lg hover:shadow-xl transition-shadow transform hover:scale-105 duration-300">
+                <div class="flex flex-col items-center text-center">
+                  <div class="bg-green-100 rounded-full p-6 mb-8">
+                    <span class="material-symbols-outlined text-6xl text-green-600">savings</span>
+                  </div>
+                  <h3 class="text-2xl font-semibold text-gray-900 mb-4">Reducción de Costos</h3>
+                  <p class="text-lg text-gray-600">
+                    Aprovecha beneficios y reduce gastos
+                  </p>
+                </div>
+              </div>
+
+              <!-- Responsabilidad Social -->
+              <div class="bg-white p-12 rounded-xl shadow-lg hover:shadow-xl transition-shadow transform hover:scale-105 duration-300">
+                <div class="flex flex-col items-center text-center">
+                  <div class="bg-green-100 rounded-full p-6 mb-8">
+                    <span class="material-symbols-outlined text-6xl text-green-600">groups</span>
+                  </div>
+                  <h3 class="text-2xl font-semibold text-gray-900 mb-4">Responsabilidad Social</h3>
+                  <p class="text-lg text-gray-600">
+                    Cumple objetivos de RSE
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
         <!-- SECCIÓN PARA MUNICIPIOS -->
-        <section class="px-10 py-20">
-          <div class="mx-auto max-w-6xl">
-            <div class="flex flex-col gap-16">
-              <div class="text-center">
-                <h2 class="text-4xl font-black text-gray-900">Para Municipios</h2>
-                <p class="mx-auto max-w-3xl text-lg text-gray-600">EcoCanje SV colabora con los municipios para implementar programas de reciclaje efectivos, mejorando la calidad de vida de los ciudadanos.</p>
+        <section class="py-16 bg-gray-50" id="municipality-benefits">
+          <div class="container mx-auto px-6">
+            <div class="mx-auto max-w-4xl text-center mb-16">
+              <h2 class="text-4xl font-bold text-gray-900 mb-4">Para Municipios</h2>
+              <p class="text-lg text-green-600">
+                EcoCanje SV colabora con los municipios para implementar programas de reciclaje efectivos, mejorando la calidad de vida de los ciudadanos.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <!-- Comunidad Participativa -->
+              <div class="bg-white p-12 rounded-xl shadow-lg hover:shadow-xl transition-shadow transform hover:scale-105 duration-300">
+                <div class="flex flex-col items-center text-center">
+                  <div class="bg-green-100 rounded-full p-6 mb-8">
+                    <span class="material-symbols-outlined text-6xl text-green-600">diversity_3</span>
+                  </div>
+                  <h3 class="text-2xl font-semibold text-gray-900 mb-4">Comunidad Participativa</h3>
+                  <p class="text-lg text-gray-600">
+                    Involucra a los ciudadanos en iniciativas de reciclaje
+                  </p>
+                </div>
               </div>
-              <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-                <div class="card"><span class="material-symbols-outlined text-4xl text-green-600">diversity_3</span><h3>Comunidad Participativa</h3><p>Involucra a los ciudadanos en iniciativas de reciclaje.</p></div>
-                <div class="card"><span class="material-symbols-outlined text-4xl text-green-600">location_city</span><h3>Entorno Urbano Mejorado</h3><p>Transforma espacios públicos y reduce contaminación.</p></div>
-                <div class="card"><span class="material-symbols-outlined text-4xl text-green-600">handshake</span><h3>Alianzas Estratégicas</h3><p>Colabora con empresas y ONGs.</p></div>
-                <div class="card"><span class="material-symbols-outlined text-4xl text-green-600">analytics</span><h3>Datos para la Gestión</h3><p>Accede a información para tomar decisiones.</p></div>
+
+              <!-- Entorno Urbano Mejorado -->
+              <div class="bg-white p-12 rounded-xl shadow-lg hover:shadow-xl transition-shadow transform hover:scale-105 duration-300">
+                <div class="flex flex-col items-center text-center">
+                  <div class="bg-green-100 rounded-full p-6 mb-8">
+                    <span class="material-symbols-outlined text-6xl text-green-600">location_city</span>
+                  </div>
+                  <h3 class="text-2xl font-semibold text-gray-900 mb-4">Entorno Urbano Mejorado</h3>
+                  <p class="text-lg text-gray-600">
+                    Transforma espacios públicos y reduce contaminación
+                  </p>
+                </div>
+              </div>
+
+              <!-- Alianzas Estratégicas -->
+              <div class="bg-white p-12 rounded-xl shadow-lg hover:shadow-xl transition-shadow transform hover:scale-105 duration-300">
+                <div class="flex flex-col items-center text-center">
+                  <div class="bg-green-100 rounded-full p-6 mb-8">
+                    <span class="material-symbols-outlined text-6xl text-green-600">handshake</span>
+                  </div>
+                  <h3 class="text-2xl font-semibold text-gray-900 mb-4">Alianzas Estratégicas</h3>
+                  <p class="text-lg text-gray-600">
+                    Colabora con empresas y ONGs
+                  </p>
+                </div>
+              </div>
+
+              <!-- Datos para la Gestión -->
+              <div class="bg-white p-12 rounded-xl shadow-lg hover:shadow-xl transition-shadow transform hover:scale-105 duration-300">
+                <div class="flex flex-col items-center text-center">
+                  <div class="bg-green-100 rounded-full p-6 mb-8">
+                    <span class="material-symbols-outlined text-6xl text-green-600">analytics</span>
+                  </div>
+                  <h3 class="text-2xl font-semibold text-gray-900 mb-4">Datos para la Gestión</h3>
+                  <p class="text-lg text-gray-600">
+                    Accede a información para tomar decisiones
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
         <!-- CTA -->
-        <section class="bg-gray-50 py-20 px-10">
+        <section class="bg-white py-20 px-10">
           <div class="mx-auto max-w-3xl text-center">
             <div class="flex flex-col items-center gap-6">
               <h2 class="text-4xl font-black text-gray-900">¡Actúa Ahora!</h2>
@@ -213,6 +820,36 @@
 <!-- Tu JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script src="funciones.js"></script>
+
+<!-- Script para animaciones -->
+<script>
+  // Función para verificar si un elemento está visible en la pantalla
+  function isElementInViewport(el) {
+    const rect = el.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
+
+  // Función para activar las animaciones cuando los elementos sean visibles
+  function handleScrollAnimations() {
+    const timelineSteps = document.querySelectorAll('.timeline-step');
+    
+    timelineSteps.forEach((step) => {
+      if (isElementInViewport(step) && !step.classList.contains('animate')) {
+        step.classList.add('animate');
+      }
+    });
+  }
+
+  // Eventos para activar las animaciones
+  window.addEventListener('scroll', handleScrollAnimations);
+  window.addEventListener('resize', handleScrollAnimations);
+  window.addEventListener('load', handleScrollAnimations);
+</script>
 
 
 
