@@ -235,3 +235,95 @@ body, html {
   height: 100vh;
 }
 /* Asegura que el mapa ocupe toda la pantalla */
+
+/* Reset */
+body, h1, h2, h3, p, ul, ol {
+  margin: 0;
+  padding: 0;
+  font-family: "Georgia", serif;
+  line-height: 1.6;
+}
+
+body {
+  background: #f4f4f4;
+  padding: 2rem;
+}
+
+/* Documento estilo notarial */
+.document {
+  background: #fff;
+  max-width: 850px;
+  margin: auto;
+  padding: 3rem;
+  box-shadow: 0 0 25px rgba(0,0,0,0.1);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #222;
+  padding-bottom: 1rem;
+}
+
+.header h1 {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.header h2 {
+  font-size: 1.2rem;
+  color: #555;
+  font-style: italic;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.section h3 {
+  font-size: 1.3rem;
+  color: #1a1a1a;
+  margin-bottom: 0.8rem;
+  border-left: 5px solid #2c3e50;
+  padding-left: 10px;
+}
+
+.section p, 
+.section li {
+  font-size: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+ul, ol {
+  margin-left: 1.5rem;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 0.9rem;
+  color: #666;
+  border-top: 1px solid #ddd;
+  padding-top: 1rem;
+}
+
+.back-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:8px;
+  background:#f3f4f6;
+  border:1px solid #e5e7eb;
+  color:#374151;
+  text-decoration:none;
+  font-weight:600;
+  font-size:.9rem;
+  transition:background .15s ease;
+  white-space:nowrap;
+}
+.back-btn:hover{ background:#e7e9ee; }
+.back-btn svg{ width:16px; height:16px; stroke:currentColor; }
