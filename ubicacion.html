@@ -1,18 +1,196 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Mapa con Leaflet</title>
+
+  <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
-  <link rel="stylesheet" href="estilos.css" />
+
+  <!-- Estilos inline (no modifico tu JS ni el div#map) -->
+  <style>
+    :root{
+      --verde:#2ecc71;
+      --verde-600:#27ae60;
+      --borde:#e6e9ee;
+      --bg:#f5f7fa;
+      --card:#ffffff;
+      --texto:#1f2a33;
+      --muted:#6b7d8a;
+      --focus:#3aa0ff;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family:'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif;
+      color:var(--texto);
+      background: linear-gradient(120deg, #eef2f6, #f8fafc);
+    }
+
+    .page{
+      min-height:100dvh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px 16px;
+    }
+
+    .wrap{
+      width:100%;
+      max-width:1100px;   /* <-- limita la “amplitud” */
+    }
+
+    /* Header compacto con botón regresar */
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:12px;
+      gap:12px;
+    }
+    .title{
+      margin:0;
+      font-size:clamp(1.1rem, 0.9rem + 1vw, 1.5rem);
+      color:#233141;
+    }
+    .subtitle{
+      margin:4px 0 0;
+      color:var(--muted);
+      font-size:.95rem;
+    }
+
+    .back-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:8px;
+      background:#f3f4f6;
+      border:1px solid #e5e7eb;
+      color:#374151;
+      text-decoration:none;
+      font-weight:600;
+      font-size:.9rem;
+      transition:background .15s ease;
+      white-space:nowrap;
+    }
+    .back-btn:hover{ background:#e7e9ee; }
+    .back-btn svg{ width:16px; height:16px; stroke:currentColor; }
+
+    /* Card del mapa */
+    .card{
+      background:var(--card);
+      border:1px solid var(--borde);
+      border-radius:16px;
+      box-shadow:0 10px 24px rgba(15,23,42,.08);
+      overflow:hidden;
+    }
+
+    /* El mapa mantiene su mismo id; solo damos altura y bordes */
+    #map{
+      width:100%;
+      height:60vh;               /* altura contenida en desktop */
+      min-height:360px;          /* asegura un mínimo visual */
+      outline:none;
+      isolation:isolate;         /* recorta sombras internas */
+    }
+
+    /* Footer pequeño bajo el mapa (opcional) */
+    .card-footer{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      padding:10px 14px;
+      border-top:1px solid var(--borde);
+      background:linear-gradient(0deg,#fafbfc, #fff 30%);
+      font-size:.9rem;
+      color:var(--muted);
+    }
+
+    /* Ajustes responsive */
+    @media (max-width: 640px){
+      #map{ height:70vh; }       /* más alto en móvil */
+      .title{ font-size:1.2rem; }
+    }
+
+    /* Afinamos controles de Leaflet para el look del card */
+    .leaflet-container{
+      font-family:inherit;
+      border-radius:16px;
+    }
+    .leaflet-control-zoom a,
+    .leaflet-control-layers-toggle{
+      border:1px solid #dbe2ea !important;
+      box-shadow:0 4px 10px rgba(0,0,0,.08) !important;
+      border-radius:10px !important;
+      background:#ffffff !important;
+      color:#223 !important;
+    }
+    .leaflet-bar a{
+      width:34px !important; height:34px !important;
+      line-height:34px !important;
+      font-weight:700;
+    }
+    .leaflet-popup-content-wrapper{
+      border-radius:12px;
+      border:1px solid #e6e9ee;
+      box-shadow:0 10px 24px rgba(0,0,0,.08);
+    }
+    .leaflet-routing-container{
+      border-radius:12px !important;
+      border:1px solid #e6e9ee !important;
+      box-shadow:0 10px 24px rgba(0,0,0,.08) !important;
+    }
+
+    /* Focus accesible */
+    :where(a, button):focus-visible{
+      outline:3px solid color-mix(in srgb, var(--focus) 70%, transparent);
+      outline-offset:2px;
+      border-radius:10px;
+    }
+  </style>
 </head>
 <body>
-  <div id="map"></div>
+  <!-- Ícono flecha para el botón regresar -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ic-back" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </symbol>
+  </svg>
 
+  <div class="page">
+    <div class="wrap">
+      <div class="topbar">
+        <div>
+          <h1 class="title">Mapa</h1>
+          <p class="subtitle">Vista contenida para una navegación más cómoda</p>
+        </div>
+        <!-- Enlace que regresa al index a nivel superior -->
+        <a href="index.html" target="_top" class="back-btn" title="Volver al inicio">
+          <svg viewBox="0 0 24 24" fill="none"><use href="#ic-back"/></svg>
+          Regresar
+        </a>
+      </div>
 
+      <section class="card">
+        <!-- ¡No cambio el id ni parámetros! -->
+        <div id="map"></div>
+
+        <!-- Pie del card (texto opcional; puedes borrarlo si quieres) -->
+        <div class="card-footer">
+          <span>Arrastra, acerca o traza rutas libremente.</span>
+          <span style="color:#27ae60; font-weight:600">Leaflet</span>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Scripts (no toco tus funcionalidades) -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
   <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
   <script src="funciones.js"></script>
 </body>

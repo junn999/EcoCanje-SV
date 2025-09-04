@@ -1,171 +1,278 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Calculadora de Reciclaje</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    :root {
-      --verde: #2ecc71;
-      --gris-claro: #ecf0f1;
-      --gris-oscuro: #34495e;
-      --blanco: #ffffff;
+    :root{
+      --verde:#2ecc71;
+      --verde-600:#27ae60;
+      --gris-claro:#ecf0f1;
+      --gris-oscuro:#34495e;
+      --blanco:#ffffff;
+      --borde:#dfe6eb;
+      --texto:#2d3436;
+      --texto-sec:#5f6b76;
+      --focus:#3aa0ff;
+      --chip:#f1f4f7;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family:'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif;
+      color:var(--texto);
       background: linear-gradient(to right, #dfe6e9, #b2bec3);
-      padding: 20px;
+      padding:20px;
     }
 
-    .container {
-      max-width: 600px;
-      margin: auto;
-      background: var(--blanco);
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    .container{
+      max-width:720px;
+      margin:auto;
+      background:var(--blanco);
+      padding:28px;
+      border-radius:12px;
+      border:1px solid var(--borde);
+      box-shadow:0 8px 20px rgba(0,0,0,0.06);
     }
 
-    h2 {
-      text-align: center;
-      color: var(--gris-oscuro);
-      margin-bottom: 20px;
+    .header{ display:flex; gap:14px; align-items:center; margin-bottom:10px; }
+    .badge{
+      width:48px; height:48px; border-radius:50%;
+      background:#e6f9ef;
+      display:flex; align-items:center; justify-content:center;
+      color:var(--verde-600);
+    }
+    .badge svg{ width:22px; height:22px; stroke:currentColor; }
+
+    h2{ margin:0 0 4px 0; font-size:1.8rem; color:var(--gris-oscuro); }
+    .subtitle{ margin:0; color:var(--texto-sec); font-size:.95rem; }
+
+    .divider{ height:1px; background:var(--gris-claro); opacity:.7; margin:16px 0 10px; border-radius:2px; }
+
+    label{ font-weight:700; margin-top:14px; display:block; color:var(--gris-oscuro); }
+
+    .field{
+      margin-top:6px; display:flex; align-items:center; gap:10px;
+      background:var(--blanco); border:1px solid var(--borde);
+      border-radius:8px; padding:10px 12px;
+      transition:border-color .2s, box-shadow .2s;
+    }
+    .field:focus-within{ border-color:var(--focus); box-shadow:0 0 0 3px rgba(58,160,255,.15); }
+
+    .field__icon{
+      width:28px; height:28px; border-radius:50%;
+      background:#f1fdf6; color:var(--verde-600);
+      display:flex; align-items:center; justify-content:center;
+      flex-shrink:0;
+    }
+    .field__icon svg{ width:16px; height:16px; stroke:currentColor; }
+
+    select, input{
+      appearance:none; border:none; outline:none; background:transparent;
+      width:100%; font:inherit; font-size:16px; color:inherit;
     }
 
-    label {
-      font-weight: bold;
-      margin-top: 15px;
-      display: block;
-      color: #2d3436;
+    .unit{
+      margin-left:auto; font-size:.85rem;
+      color:#6c7a85; background:#edf2f7;
+      border:1px solid #e1e7ee; border-radius:8px;
+      padding:2px 8px;
     }
 
-    select, input {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #bdc3c7;
-      border-radius: 6px;
-      font-size: 16px;
-    }
+    .hint{ color:#74808c; font-size:.9rem; margin-top:6px; display:block; }
 
-    button {
-      width: 100%;
-      background: var(--verde);
-      color: var(--blanco);
-      border: none;
-      padding: 12px;
-      margin-top: 20px;
-      font-size: 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s ease;
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      margin-top:8px; background:var(--chip);
+      border:1px solid #e3e7eb; color:#1f2a33;
+      padding:6px 10px; border-radius:999px;
+      font-weight:600; font-size:.9rem;
     }
+    .chip svg{ width:16px; height:16px; stroke:#1f2a33; }
 
-    button:hover {
-      background: #27ae60;
+    button{
+      width:100%; border:none; padding:12px 14px;
+      font-size:16px; font-weight:700; border-radius:8px;
+      cursor:pointer; transition:background .2s ease, transform .06s ease;
     }
+    .btn-primary{ background:var(--verde); color:var(--blanco); margin-top:18px; }
+    .btn-primary:hover{ background:var(--verde-600); }
+    .btn-primary:active{ transform:translateY(1px); }
 
-    .result {
-      margin-top: 25px;
-      background: var(--gris-claro);
-      padding: 20px;
-      border-radius: 8px;
-      color: #2d3436;
+    /* Botón Regresar */
+    .back-wrap{ margin-top:14px; }
+    .btn-back{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:6px 12px;
+      border-radius:6px;
+      font-size:.85rem; font-weight:600;
+      background:#f3f4f6;
+      border:1px solid #e5e7eb;
+      color:#374151;
+      text-decoration:none;
+      width:auto;
     }
+    .btn-back:hover{ background:#e5e7eb; }
 
-    .result h3 {
-      margin-top: 0;
-      color: var(--gris-oscuro);
+    .result{
+      margin-top:20px; background:var(--gris-claro);
+      padding:16px; border-radius:8px;
+      color:var(--texto); border:1px solid #e7ebee;
     }
+    .result h3{ margin:0 0 8px 0; color:var(--gris-oscuro); display:flex; align-items:center; gap:6px; }
+    .result h3 svg{ width:16px; height:16px; stroke:#555; }
+    ul{ padding-left:20px; margin:0; }
 
-    ul {
-      padding-left: 20px;
-    }
-
-    @media (max-width: 600px) {
-      .container {
-        padding: 20px;
-      }
-    }
+    .footer{ text-align:center; color:#6b7d8a; font-size:.9rem; margin-top:18px; }
   </style>
 </head>
 <body>
+  <!-- ICONOS -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ic-leaf" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2C12 13 2 20 2 20c8 0 12-3 12-10V2z"></path>
+      <path d="M12 2c0 11 10 18 10 18-8 0-12-3-12-10V2z"></path>
+    </symbol>
+    <symbol id="ic-scale" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3v3"/><path d="M6 6h12"/>
+      <path d="M8 6l-2.5 6a3 3 0 1 0 5 0L8 6zM16 6l2.5 6a3 3 0 1 1-5 0L16 6z"/>
+      <path d="M12 9v11"/>
+    </symbol>
+    <symbol id="ic-bottle" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 2h4v2a2 2 0 0 1-2 2 2 2 0 0 0-2 2v12a2 2 0 0 0 4 0V8a2 2 0 0 0-2-2 2 2 0 0 1-2-2V2z"/>
+    </symbol>
+    <symbol id="ic-can" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="7" y="2" width="10" height="20" rx="2"></rect>
+      <line x1="7" y1="6" x2="17" y2="6"></line>
+    </symbol>
+    <symbol id="ic-box" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+      <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+      <line x1="12" y1="22.08" x2="12" y2="12"/>
+    </symbol>
+    <symbol id="ic-glass" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 22h8"/><path d="M7 2h10l-2 14H9L7 2z"/><path d="M12 16v6"/>
+    </symbol>
+    <symbol id="ic-dish" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"/>
+    </symbol>
+    <symbol id="ic-back" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </symbol>
+  </svg>
+
   <div class="container">
-    <h2>♻️ Calculadora de Reciclaje</h2>
+    <header class="header">
+      <div class="badge"><svg><use href="#ic-leaf"/></svg></div>
+      <div>
+        <h2>Calculadora de Reciclaje</h2>
+        <p class="subtitle">Convierte tu material reciclado en equivalentes de alimentos</p>
+      </div>
+    </header>
 
-    <label for="material">Tipo de Material:</label>
-    <select id="material">
-      <option value="">Selecciona un material</option>
-      <option value="plastico">Plástico PET</option>
-      <option value="aluminio">Aluminio</option>
-      <option value="carton">Cartón</option>
-      <option value="vidrio">Vidrio</option>
-    </select>
+    <div class="divider"></div>
 
-    <label for="peso">Peso (libras):</label>
-    <input type="number" id="peso" placeholder="Ej. 12.5">
+    <form onsubmit="event.preventDefault(); calcular();">
+      <label for="material">Tipo de Material:</label>
+      <div class="field">
+        <span class="field__icon" id="materialIcon"><svg><use href="#ic-bottle"/></svg></span>
+        <select id="material">
+          <option value="">Selecciona un material</option>
+          <option value="plastico">Plástico PET</option>
+          <option value="aluminio">Aluminio</option>
+          <option value="carton">Cartón</option>
+          <option value="vidrio">Vidrio</option>
+        </select>
+      </div>
+      <span id="materialBadge" class="chip" style="display:none"><svg></svg><span id="materialName"></span></span>
+      <small class="hint">Cada material tiene factores de conversión distintos.</small>
 
-    <button onclick="calcular()">Calcular Equivalencia</button>
+      <label for="peso">Peso (libras):</label>
+      <div class="field">
+        <span class="field__icon"><svg><use href="#ic-scale"/></svg></span>
+        <input type="number" id="peso" placeholder="Ej. 12.5" step="0.01" min="0"/>
+        <span class="unit">lb</span>
+      </div>
+      <small class="hint">Acepta decimales. Debe ser mayor a 0.</small>
 
-    <div class="result" id="resultado"></div>
+      <button type="submit" class="btn-primary" onclick="calcular()">Calcular Equivalencia</button>
+    </form>
+
+    <section class="result" id="resultado"></section>
+
+    <!-- Botón Regresar pequeño -->
+    <div class="back-wrap">
+      <a href="index.html" target="_top" class="btn-back">
+        <svg width="14" height="14"><use href="#ic-back"/></svg> Regresar
+      </a>
+    </div>
+
+    <footer class="footer"><p>Hecho con 💚 pensando en el planeta</p></footer>
   </div>
 
   <script>
-    function calcular() {
-      const material = document.getElementById("material").value;
-      const peso = parseFloat(document.getElementById("peso").value);
-      const resultado = document.getElementById("resultado");
+    const MATERIAL_ICON = {
+      "":      { use:"",          label:"" },
+      plastico:{ use:"#ic-bottle", label:"Plástico PET" },
+      aluminio:{ use:"#ic-can",    label:"Aluminio" },
+      carton:  { use:"#ic-box",    label:"Cartón" },
+      vidrio:  { use:"#ic-glass",  label:"Vidrio" }
+    };
 
-      if (!material || isNaN(peso) || peso <= 0) {
-        resultado.innerHTML = "<strong>⚠️ Por favor ingresa un material y un peso válido.</strong>";
+    function updateMaterialUI(){
+      const sel=document.getElementById("material");
+      const iconWrap=document.getElementById("materialIcon");
+      const chip=document.getElementById("materialBadge");
+      const chipIcon=chip.querySelector("svg");
+      const chipName=document.getElementById("materialName");
+      const conf=MATERIAL_ICON[sel.value]||MATERIAL_ICON[""];
+      iconWrap.innerHTML=conf.use?`<svg><use href="${conf.use}"/></svg>`:"";
+      if(conf.use){
+        chipIcon.innerHTML=`<use href="${conf.use}"/>`;
+        chipName.textContent=conf.label;
+        chip.style.display="inline-flex";
+      }else{ chip.style.display="none"; }
+    }
+
+    function calcular(){
+      const material=document.getElementById("material").value;
+      const peso=parseFloat(document.getElementById("peso").value);
+      const resultado=document.getElementById("resultado");
+      if(!material||isNaN(peso)||peso<=0){
+        resultado.innerHTML="<strong>⚠️ Ingresa un material y un peso válido.</strong>";
         return;
       }
-
-      let arroz = 0, frijoles = 0, azucar = 0, aceite = 0;
-
-      switch(material) {
-        case "plastico":
-          arroz = peso * 0.25;
-          frijoles = peso * 0.1;
-          azucar = peso * 0.05;
-          aceite = peso * 0.08;
-          break;
-        case "aluminio":
-          arroz = peso * 0.3;
-          frijoles = peso * 0.15;
-          azucar = peso * 0.07;
-          aceite = peso * 0.1;
-          break;
-        case "carton":
-          arroz = peso * 0.1;
-          frijoles = peso * 0.05;
-          azucar = peso * 0.02;
-          aceite = peso * 0.03;
-          break;
-        case "vidrio":
-          arroz = peso * 0.2;
-          frijoles = peso * 0.08;
-          azucar = peso * 0.04;
-          aceite = peso * 0.06;
-          break;
+      let arroz=0, frijoles=0, azucar=0, aceite=0;
+      switch(material){
+        case "plastico": arroz=peso*0.25; frijoles=peso*0.1; azucar=peso*0.05; aceite=peso*0.08; break;
+        case "aluminio": arroz=peso*0.3; frijoles=peso*0.15; azucar=peso*0.07; aceite=peso*0.1; break;
+        case "carton":   arroz=peso*0.1; frijoles=peso*0.05; azucar=peso*0.02; aceite=peso*0.03; break;
+        case "vidrio":   arroz=peso*0.2; frijoles=peso*0.08; azucar=peso*0.04; aceite=peso*0.06; break;
       }
-
-      resultado.innerHTML = `
-        <h3>🍽️ Equivalencia en Alimentos:</h3>
+      resultado.innerHTML=`
+        <h3><svg><use href="#ic-dish"/></svg> Equivalencia en Alimentos:</h3>
         <ul>
           <li>Arroz: <strong>${arroz.toFixed(2)} lb</strong></li>
           <li>Frijoles: <strong>${frijoles.toFixed(2)} lb</strong></li>
           <li>Azúcar: <strong>${azucar.toFixed(2)} lb</strong></li>
           <li>Aceite: <strong>${aceite.toFixed(2)} L</strong></li>
-        </ul>
-      `;
+        </ul>`;
     }
+
+    (function(){
+      const sel=document.getElementById("material");
+      const peso=document.getElementById("peso");
+      const resultado=document.getElementById("resultado");
+      updateMaterialUI();
+      sel.addEventListener("change",()=>{updateMaterialUI();resultado.textContent="";});
+      [peso,sel].forEach(el=>{
+        el.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();calcular();}});
+        el.addEventListener("input",()=>{resultado.textContent="";});
+      });
+    })();
   </script>
 </body>
 </html>
