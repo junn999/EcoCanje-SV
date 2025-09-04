@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de Reciclaje</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --verde: #2ecc71;
+      --gris-claro: #ecf0f1;
+      --gris-oscuro: #34495e;
+      --blanco: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #dfe6e9, #b2bec3);
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: var(--blanco);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--gris-oscuro);
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 15px;
+      display: block;
+      color: #2d3436;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #bdc3c7;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      background: var(--verde);
+      color: var(--blanco);
+      border: none;
+      padding: 12px;
+      margin-top: 20px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #27ae60;
+    }
+
+    .result {
+      margin-top: 25px;
+      background: var(--gris-claro);
+      padding: 20px;
+      border-radius: 8px;
+      color: #2d3436;
+    }
+
+    .result h3 {
+      margin-top: 0;
+      color: var(--gris-oscuro);
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>♻️ Calculadora de Reciclaje</h2>
+
+    <label for="material">Tipo de Material:</label>
+    <select id="material">
+      <option value="">Selecciona un material</option>
+      <option value="plastico">Plástico PET</option>
+      <option value="aluminio">Aluminio</option>
+      <option value="carton">Cartón</option>
+      <option value="vidrio">Vidrio</option>
+    </select>
+
+    <label for="peso">Peso (libras):</label>
+    <input type="number" id="peso" placeholder="Ej. 12.5">
+
+    <button onclick="calcular()">Calcular Equivalencia</button>
+
+    <div class="result" id="resultado"></div>
+  </div>
+
+  <script>
+    function calcular() {
+      const material = document.getElementById("material").value;
+      const peso = parseFloat(document.getElementById("peso").value);
+      const resultado = document.getElementById("resultado");
+
+      if (!material || isNaN(peso) || peso <= 0) {
+        resultado.innerHTML = "<strong>⚠️ Por favor ingresa un material y un peso válido.</strong>";
+        return;
+      }
+
+      let arroz = 0, frijoles = 0, azucar = 0, aceite = 0;
+
+      switch(material) {
+        case "plastico":
+          arroz = peso * 0.25;
+          frijoles = peso * 0.1;
+          azucar = peso * 0.05;
+          aceite = peso * 0.08;
+          break;
+        case "aluminio":
+          arroz = peso * 0.3;
+          frijoles = peso * 0.15;
+          azucar = peso * 0.07;
+          aceite = peso * 0.1;
+          break;
+        case "carton":
+          arroz = peso * 0.1;
+          frijoles = peso * 0.05;
+          azucar = peso * 0.02;
+          aceite = peso * 0.03;
+          break;
+        case "vidrio":
+          arroz = peso * 0.2;
+          frijoles = peso * 0.08;
+          azucar = peso * 0.04;
+          aceite = peso * 0.06;
+          break;
+      }
+
+      resultado.innerHTML = `
+        <h3>🍽️ Equivalencia en Alimentos:</h3>
+        <ul>
+          <li>Arroz: <strong>${arroz.toFixed(2)} lb</strong></li>
+          <li>Frijoles: <strong>${frijoles.toFixed(2)} lb</strong></li>
+          <li>Azúcar: <strong>${azucar.toFixed(2)} lb</strong></li>
+          <li>Aceite: <strong>${aceite.toFixed(2)} L</strong></li>
+        </ul>
+      `;
+    }
+  </script>
+</body>
+</html>
