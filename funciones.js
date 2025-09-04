@@ -42,7 +42,8 @@ document.addEventListener("DOMContentLoaded", () => {
       // Insertar fecha/hora actual en el campo oculto
       timeInput.value = new Date().toLocaleString();
 
-      emailjs.sendForm("service_t96x33t", "87an3ar", this)
+      emailjs.sendForm("service_xoaa0x8", "template_0zfb912", this)
+
         .then(() => {
           status.textContent = "✅ Tu mensaje ha sido enviado con éxito.";
           status.classList.remove("hidden");
