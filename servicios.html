@@ -1,132 +1,298 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Servicios - EcoCanje SV</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      margin: 0;
-      padding: 0;
-      color: #333;
+    :root{
+      --green:#2ecc71;
+      --green-600:#27ae60;
+      --ink:#1f2a33;
+      --muted:#6b7d8a;
+      --line:#e6e9ee;
+      --bg-a:#dfe6e9;
+      --bg-b:#b2bec3;
+      --white:#fff;
+    }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      color:var(--ink);
+      background: linear-gradient(to right, var(--bg-a), var(--bg-b));
     }
 
-    header {
-      background: #16a34a;
-      color: #000;
-      padding: 20px;
-      text-align: center;
+    .page{ min-height:100dvh; display:flex; flex-direction:column; }
+    .container{ width:100%; max-width:1100px; margin:0 auto; padding:20px 16px; }
+
+    /* Back */
+    .topbar{ display:flex; justify-content:space-between; align-items:center; padding-top:10px; }
+    .back-link{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px; border-radius:10px;
+      background:#f3f4f6; border:1px solid #e5e7eb;
+      color:#374151; text-decoration:none; font-weight:600; font-size:.9rem;
+      transition:background .15s ease;
+    }
+    .back-link:hover{ background:#e9ecef; }
+    .back-link svg{ width:16px; height:16px; stroke:currentColor; }
+
+    /* Hero */
+    .hero{
+      margin-top:16px;
+      background:var(--white);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:26px 22px;
+    }
+    .hero h1{
+      margin:0 0 6px 0;
+      font-size:clamp(1.4rem,1rem + 1.6vw,2.2rem);
+      color:#34495e;
+      display:flex; align-items:center; gap:10px;
+    }
+    .brand-badge{
+      width:44px; height:44px; border-radius:50%;
+      background:#e6f9ef; color:var(--green-600);
+      display:grid; place-items:center;
+    }
+    .brand-badge svg{ width:22px; height:22px; stroke:currentColor; }
+    .hero p{ margin:8px 0 0; color:var(--muted); }
+
+    /* Servicios – paneles ligeros con icono dentro de círculo verde claro */
+    .section-title{
+      font-size:1.25rem; margin:22px 6px 12px; color:#34495e;
+    }
+    .feature-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+      gap:18px;
+    }
+    .feature{
+      background:var(--white);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:24px 18px;
+      text-align:center;
+      transition:transform .15s ease, box-shadow .15s ease;
+    }
+    .feature:hover{ transform:translateY(-3px); box-shadow:0 8px 18px rgba(0,0,0,.08); }
+    .feat-icon{
+      width:88px; height:88px; border-radius:50%;
+      background:#e6f9ef; color:var(--green-600);
+      display:grid; place-items:center; margin:0 auto 14px;
+      border:1px solid #d7f0e2;
+    }
+    .feat-icon svg{ width:40px; height:40px; stroke:currentColor; }
+    .feature h3{ margin:0 0 10px 0; font-size:1.25rem; color:#222; }
+    .feature p{
+      margin:0; color:#475569; font-size:1rem; line-height:1.55;
+      max-width:34ch; margin-inline:auto;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
+    /* BENEFICIOS – los 4 iconos del ejemplo para llenar la vista */
+    .benefits{
+      margin-top:24px;
+      background:var(--white);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:18px 14px 12px;
     }
-
-    .container {
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 0 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
+    .benefits-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+      gap:14px;
+      padding:8px 6px 6px;
     }
-
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      padding: 25px;
-      text-align: center;
-      transition: transform 0.3s ease;
+    .benefit-item{
+      display:flex; align-items:center; gap:14px;
+      padding:12px 10px; border-radius:12px;
+      transition:background .15s ease;
     }
-
-    .card:hover {
-      transform: translateY(-8px);
+    .benefit-item:hover{ background:#f8fbf9; }
+    .benefit-icon{
+      width:64px; height:64px; border-radius:50%;
+      background:#e6f9ef; color:var(--green-600);
+      display:grid; place-items:center; flex:0 0 64px;
+      border:1px solid #d7f0e2;
     }
+    .benefit-icon svg{ width:32px; height:32px; stroke:currentColor; }
+    .benefit-text{ display:flex; flex-direction:column; }
+    .benefit-text h4{ margin:0 0 4px 0; font-size:1.05rem; color:#2c3e50; }
+    .benefit-text p{ margin:0; color:#4f5d6a; font-size:.95rem; }
 
-    .icon {
-      font-size: 3rem;
-      color: #a6ff00;
-      margin-bottom: 15px;
-    }
+    .footer{ text-align:center; color:#5f6b76; font-size:.92rem; padding:26px 0 14px; }
 
-    h2 {
-      color: #222;
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 0.95rem;
-      line-height: 1.5;
-    }
-
-    footer {
-      margin-top: 40px;
-      background: #222;
-      color: #eee;
-      padding: 15px;
-      text-align: center;
-      font-size: 0.9rem;
+    :where(a, button):focus-visible{
+      outline:3px solid rgba(58,160,255,.6);
+      outline-offset:3px;
+      border-radius:10px;
     }
   </style>
-  <!-- Librería de íconos -->
-  <script src="https://kit.fontawesome.com/42e3a5b3f6.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <header>
-    <h1>Servicios de EcoCanje SV</h1>
-    <p>Recicla, gana y transforma tu comunidad</p>
-  </header>
+  <!-- Íconos SVG lineales -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ic-back" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </symbol>
+    <symbol id="ic-leaf" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2C12 13 2 20 2 20c8 0 12-3 12-10V2z"></path>
+      <path d="M12 2c0 11 10 18 10 18-8 0-12-3-12-10V2z"></path>
+    </symbol>
 
-  <main class="container">
-    <!-- Recolección -->
-    <div class="card">
-      <div class="icon"><i class="fas fa-recycle"></i></div>
-      <h2>Recolección</h2>
-      <p>Puntos de acopio en <strong>Alcaldías</strong> y comunidades. Clasificación y pesaje transparente de materiales reciclables.</p>
+    <!-- Servicios -->
+    <symbol id="ic-recycle" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7.5 7 5 3 3.5 5.8M5 3h5"/>
+      <path d="M16.5 7 19 3l1.5 2.8M19 3h-5"/>
+      <path d="M12 14v6M10 18l2 2 2-2"/>
+      <path d="M4.5 13a7.5 7.5 0 0 1 15 0"/>
+    </symbol>
+    <symbol id="ic-heart-hand" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 11s1.5-2 3-2 3 2 3 2"/>
+      <path d="M12 13l-2 2H7a2 2 0 0 0 0 4h4l5-3a2 2 0 0 0-2-3h-2"/>
+      <path d="M16 8a3 3 0 0 0-6 0c0 2 3 4 3 4s3-2 3-4z"/>
+    </symbol>
+    <symbol id="ic-truck" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="1" y="7" width="11" height="8" rx="2"/>
+      <path d="M12 10h4l3 3v2h-3"/>
+      <circle cx="5.5" cy="17.5" r="1.5"/><circle cx="17.5" cy="17.5" r="1.5"/>
+    </symbol>
+    <symbol id="ic-handshake" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 12l3-3a2 2 0 1 1 3 3l-4 4"/>
+      <path d="M12 12l-3-3a2 2 0 1 0-3 3l4 4"/>
+      <path d="M8 15l2 2m4-2l-2 2"/>
+    </symbol>
+    <symbol id="ic-mobile" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="7" y="2" width="10" height="20" rx="2"/><circle cx="12" cy="18" r="1"/>
+    </symbol>
+    <symbol id="ic-teacher" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="14" height="10" rx="2"/>
+      <path d="M10 14v6M7 20h6"/><circle cx="19" cy="9" r="2"/>
+    </symbol>
+
+    <!-- Beneficios (los 4 de tu referencia) -->
+    <symbol id="ic-badge" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="8"></circle>
+      <path d="m9 12 2 2 4-4"/>
+      <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+    </symbol>
+    <symbol id="ic-trending-up" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+      <polyline points="17 6 23 6 23 12"/>
+    </symbol>
+    <symbol id="ic-piggy" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 8h-2a7 7 0 0 0-12 0H4a2 2 0 0 0-2 2v2a6 6 0 0 0 6 6h1v3h4v-3h2l1 3h4l1-3h1a3 3 0 0 0 3-3v-2a3 3 0 0 0-3-3z"/>
+      <circle cx="9.5" cy="10.5" r="0.8"/>
+    </symbol>
+    <symbol id="ic-users" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+    </symbol>
+  </svg>
+
+  <div class="page">
+    <div class="container">
+      <div class="topbar">
+        <a class="back-link" href="index.html" target="_top">
+          <svg><use href="#ic-back"/></svg> Regresar
+        </a>
+      </div>
+
+      <section class="hero">
+        <h1>
+          <span class="brand-badge"><svg><use href="#ic-leaf"/></svg></span>
+          Servicios de EcoCanje SV
+        </h1>
+        <p>Recicla, gana y transforma tu comunidad. Operamos con logística responsable, alianzas y tecnología para convertir residuos en valor.</p>
+      </section>
+
+      <!-- SERVICIOS (tus 6 bloques y textos originales) -->
+      <h2 class="section-title">¿Cómo te ayudamos?</h2>
+      <div class="feature-grid">
+        <article class="feature">
+          <div class="feat-icon"><svg><use href="#ic-recycle"/></svg></div>
+          <h3>Recolección</h3>
+          <p>Puntos de acopio en <strong>Alcaldías</strong> y comunidades. Clasificación y pesaje transparente de materiales reciclables.</p>
+        </article>
+
+        <article class="feature">
+          <div class="feat-icon"><svg><use href="#ic-heart-hand"/></svg></div>
+          <h3>Canje de Materiales</h3>
+          <p>Intercambia tus residuos por alimentos básicos (arroz, frijoles, agua) o productos sostenibles como bolsas reutilizables.</p>
+        </article>
+
+        <article class="feature">
+          <div class="feat-icon"><svg><use href="#ic-truck"/></svg></div>
+          <h3>Transporte y Logística</h3>
+          <p>Camiones especializados para la recolección y traslado seguro hacia depósitos aliados en áreas municipales y semiurbanas.</p>
+        </article>
+
+        <article class="feature">
+          <div class="feat-icon"><svg><use href="#ic-handshake"/></svg></div>
+          <h3>Alianzas Empresariales</h3>
+          <p>Programas de RSE, reportes de impacto ambiental y espacios de publicidad en centros de acopio, camiones y aplicación móvil.</p>
+        </article>
+
+        <article class="feature">
+          <div class="feat-icon"><svg><use href="#ic-mobile"/></svg></div>
+          <h3>Plataforma Tecnológica</h3>
+          <p>App móvil con código QR para registrar entregas, seguimiento de recompensas y estadísticas de impacto ambiental.</p>
+        </article>
+
+        <article class="feature">
+          <div class="feat-icon"><svg><use href="#ic-teacher"/></svg></div>
+          <h3>Consultoría en Gestión de Residuos</h3>
+          <p>Asesoramos a municipios, empresas y comunidades en la implementación de planes de reducción y aprovechamiento de residuos, con soluciones sostenibles y prácticas.</p>
+        </article>
+      </div>
+
+      <!-- BENEFICIOS (los 4 iconos que enviaste para “llenar” la vista) -->
+      <section class="benefits" aria-label="Beneficios de EcoCanje">
+        <h2 class="section-title" style="margin-top:6px">Beneficios</h2>
+        <div class="benefits-grid">
+          <div class="benefit-item">
+            <div class="benefit-icon"><svg><use href="#ic-badge"/></svg></div>
+            <div class="benefit-text">
+              <h4>Calidad y Confianza</h4>
+              <p>Procesos auditables con pesaje y registro claros.</p>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon"><svg><use href="#ic-trending-up"/></svg></div>
+            <div class="benefit-text">
+              <h4>Impacto Creciente</h4>
+              <p>Más material recuperado, más familias beneficiadas.</p>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon"><svg><use href="#ic-piggy"/></svg></div>
+            <div class="benefit-text">
+              <h4>Ahorro Sostenible</h4>
+              <p>Canjes que alivian la canasta básica del hogar.</p>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon"><svg><use href="#ic-users"/></svg></div>
+            <div class="benefit-text">
+              <h4>Comunidad</h4>
+              <p>Educación y participación ciudadana continua.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        © 2025 EcoCanje SV — Hecho con 💚 pensando en el planeta
+      </footer>
     </div>
-
-    <!-- Canje -->
-    <div class="card">
-      <div class="icon"><i class="fas fa-hand-holding-heart"></i></div>
-      <h2>Canje de Materiales</h2>
-      <p>Intercambia tus residuos por alimentos básicos (arroz, frijoles, agua) o productos sostenibles como bolsas reutilizables.</p>
-    </div>
-
-    <!-- Transporte -->
-    <div class="card">
-      <div class="icon"><i class="fas fa-truck"></i></div>
-      <h2>Transporte y Logística</h2>
-      <p>Camiones especializados para la recolección y traslado seguro hacia depósitos aliados en áreas municipales y semiurbanas.</p>
-    </div>
-
-    <!-- Alianzas -->
-    <div class="card">
-      <div class="icon"><i class="fas fa-handshake"></i></div>
-      <h2>Alianzas Empresariales</h2>
-      <p>Programas de RSE, reportes de impacto ambiental y espacios de publicidad en centros de acopio, camiones y aplicación móvil.</p>
-    </div>
-
-    <!-- Plataforma Tecnológica -->
-    <div class="card">
-      <div class="icon"><i class="fas fa-mobile-alt"></i></div>
-      <h2>Plataforma Tecnológica</h2>
-      <p>App móvil con código QR para registrar entregas, seguimiento de recompensas y estadísticas de impacto ambiental.</p>
-    </div>
-
-    <!-- Consultoría -->
-    <div class="card">
-      <div class="icon"><i class="fas fa-chalkboard-teacher"></i></div>
-      <h2>Consultoría en Gestión de Residuos</h2>
-      <p>Asesoramos a municipios, empresas y comunidades en la implementación de planes de reducción y aprovechamiento de residuos, con soluciones sostenibles y prácticas.</p>
-    </div>
-  </main>
-
-  <footer>
-    © 2025 EcoCanje SV - Todos los derechos reservados
-  </footer>
+  </div>
 </body>
 </html>
