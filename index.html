@@ -12,8 +12,6 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
-  <!-- Tu CSS personalizado -->
-  <link rel="stylesheet" href="styles.css">
   <style>
     @keyframes slideFromLeft {
       from {
@@ -146,6 +144,41 @@
     .timeline-step:nth-child(even).animate {
       animation: fadeInRight 1s ease-out forwards;
     }
+
+    .footer{ text-align:center; color:#5f6b76; font-size:.92rem; padding:26px 0 14px; }
+
+    /* Botones perfiles Github*/ 
+    .github-button {
+      display: flex;
+      align-items: center;
+      background-color: #000;
+      color: #fff;
+      padding: 10px 10px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+      width: 175px;
+      height: 50px;
+    }
+
+    .github-button:hover {
+      background-color: #333;
+    }
+
+    .github-button img {
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+    }
+
+    /* Contenedor horizontal de perfiles */
+    .github-container {
+      display: flex;
+      gap: 20px; /* Espacio entre botones */
+      justify-content: center;
+      margin-top: 40px;
+    }
   </style>
 </head>
 <body style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
@@ -176,8 +209,7 @@
             <!-- Desktop Menu -->
             <div class="hidden md:flex items-center gap-8">
               <nav class="flex items-center gap-8">
-                <a class="text-gray-800 hover:text-green-600 transition-all hover:scale-110" href="#">Inicio</a>
-                <a href="corporativo.html" class="text-gray-800 hover:text-green-600 transition-all hover:scale-110" href="#">Lo legal</a>
+                <a class="text-gray-800 hover:text-green-600 transition-all hover:scale-110" href="">Inicio</a>
                 <a href="servicios.html" class="text-gray-800 hover:text-green-600 transition-all hover:scale-110" href="#">Servicios</a>
                 <a href="ubicacion.html" class="text-gray-800 hover:text-green-600 transition-all hover:scale-110">Ubicaciones</a>
                 <a class="text-gray-800 hover:text-green-600 transition-all hover:scale-110" href="#contacto">Contacto</a>
@@ -697,18 +729,35 @@
             <div class="flex flex-col items-center gap-6">
               <h2 class="text-4xl font-black text-gray-900">¡Actúa Ahora!</h2>
               <p class="text-lg text-gray-600">El futuro sostenible de El Salvador está en nuestras manos. ¡Únete a EcoCanje SV!</p>
-              <button class="btn-primary h-12 px-6 text-base">Comienza a Reciclar</button>
+              <button class="bg-green-600 text-white rounded-lg px-6 py-2 hover:bg-green-700 transition-all hover:scale-105 hover:shadow-lg">Comienza a Reciclar</button>
             </div>
           </div>
         </section>
 
         <section>
-          <h2>Integrantes</h2>
-          <p>Junior Josue Gaitan Alberto</p>
-          <p>Monica Alessandra Bonilla Escobar</p>
-          <p>Rony Josue Sorto Villalta</p>
-          <p>Francisco Javier Lemus Cruz</p>
-          <p>Cesar Alexander Romero Vasquez</p>
+          <div class="mx-auto max-w-3xl text-center">
+            <div class="flex flex-col items-center gap-6">
+              <h2 class="text-4xl font-black text-gray-900">Equipo desarrollador</h2>
+            </div>
+
+            <!-- Botones perfiles Github --> 
+            <div class="github-container">
+            <a href="https://github.com/junn999" class="github-button" target="_blank">
+              <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo">
+               junn999
+            </a>
+
+            <a href="https://github.com/Francisco3652e" class="github-button" target="_blank">
+              <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo">
+              Francisco3652e
+            </a>
+
+            <a href="https://github.com/Alexr1112" class="github-button" target="_blank">
+              <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo">
+              Alexr1112
+            </a>
+            </div>
+          </div>
         </section>
 
         <!-- Modal de Contacto -->
@@ -758,13 +807,9 @@
     </div>
   </div>
 
-  
-
-  
-
   <!-- FOOTER -->
-  <footer class="text-center text-[#4c9a66] text-base mt-8 pt-8 border-t border-[#cfe7d7]">
-    @2025 EcoCanje SV. Todos los derechos reservados.
+  <footer class="footer">
+    © 2025 EcoCanje SV. Todos los derechos reservados.
   </footer>
 
 <!-- Tu JavaScript -->
@@ -800,9 +845,6 @@
   window.addEventListener('resize', handleScrollAnimations);
   window.addEventListener('load', handleScrollAnimations);
 </script>
-
-
-
 
 </body>
 </html>
